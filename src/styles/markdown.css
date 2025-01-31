@@ -1,0 +1,464 @@
+/* Light mode variables */
+:root {
+  --tw-prose-body: #374151;
+  --tw-prose-headings: #111827;
+  --tw-prose-links: #2563eb;
+  --tw-prose-bold: #111827;
+  --tw-prose-quotes: #111827;
+  --tw-prose-quote-borders: #e5e7eb;
+  --tw-prose-code: #111827;
+  --tw-prose-pre-code: #1a1a1a;
+  --tw-prose-pre-bg: #f5f5f5;
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #c1c1c1;
+  --tw-prose-background: #ffffff;
+  --preview-min-width: 50px;
+  --preview-collapsed-width: 24px;
+  --gutter-size: 4px;
+  --collapsed-bg-light: #f3f4f6;
+  --collapsed-bg-dark: #1e293b;
+}
+
+/* Split pane styles */
+.split {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.split.horizontal {
+  flex-direction: row;
+}
+
+.split.vertical {
+  flex-direction: column;
+}
+
+.gutter {
+  background-color: var(--tw-prose-quote-borders);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.gutter::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 2rem;
+  background-color: currentColor;
+  opacity: 0.3;
+  border-radius: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.gutter:hover {
+  background-color: var(--tw-prose-links);
+}
+
+.gutter:hover::after {
+  opacity: 0.8;
+}
+
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+  width: 8px;
+  margin: 0 -4px;
+}
+
+.gutter.gutter-vertical {
+  cursor: row-resize;
+  height: 8px;
+  margin: -4px 0;
+}
+
+.dark .gutter {
+  background-color: var(--tw-prose-quote-borders);
+}
+
+.dark .gutter:hover {
+  background-color: var(--tw-prose-links);
+}
+
+/* Dark mode variables */
+.dark {
+  --tw-prose-body: #e5e7eb;
+  --tw-prose-headings: #f3f4f6;
+  --tw-prose-links: #60a5fa;
+  --tw-prose-bold: #f3f4f6;
+  --tw-prose-quotes: #f3f4f6;
+  --tw-prose-quote-borders: #4b5563;
+  --tw-prose-code: #e5e7eb;
+  --tw-prose-pre-code: #e5e7eb;
+  --tw-prose-pre-bg: #1e293b;
+  --scrollbar-track: #1e293b;
+  --scrollbar-thumb: #4b5563;
+  --tw-prose-background: #111827;
+}
+
+/* Preview container styles */
+.preview-container {
+  background-color: transparent;
+  height: 100%;
+  min-width: var(--preview-min-width);
+  position: relative;
+  transition: min-width 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-container.collapsed {
+  min-width: var(--preview-collapsed-width);
+  max-width: var(--preview-collapsed-width);
+  padding: 0;
+  background-color: var(--collapsed-bg-light);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dark .preview-container.collapsed {
+  background-color: var(--collapsed-bg-dark);
+}
+
+.preview-container.collapsed .preview-content {
+  display: none;
+}
+
+.preview-toggle {
+  position: absolute;
+  top: 0.5rem;
+  left: -12px;
+  width: 24px;
+  height: 24px;
+  background-color: var(--tw-prose-background);
+  border: 1px solid var(--tw-prose-quote-borders);
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease;
+  color: var(--tw-prose-body);
+}
+
+.preview-container.collapsed .preview-toggle {
+  position: static;
+  margin-top: 0.5rem;
+  display: flex;
+  transform: rotate(180deg);
+  background-color: transparent;
+  border: none;
+}
+
+.preview-toggle:hover {
+  background-color: var(--tw-prose-pre-bg);
+}
+
+.preview-content {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--tw-prose-background);
+  flex: 1;
+}
+
+/* Base styles for the markdown preview */
+.prose {
+  color: var(--tw-prose-body);
+  max-width: 65ch;
+  font-size: 1rem;
+  line-height: 1.75;
+  background-color: var(--tw-prose-background);
+  min-height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  transition: opacity 0.2s ease;
+}
+
+/* Native-looking scrollbars */
+.prose {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); /* Firefox */
+}
+
+/* Webkit scrollbar styles */
+.prose::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.prose::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+.prose::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 4px;
+  border: 2px solid var(--scrollbar-track);
+}
+
+.prose::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+/* Remove top margin from first element */
+.prose > :first-child {
+  margin-top: 0;
+}
+
+/* Remove bottom margin from last element */
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+.prose :where(h1):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-headings);
+  font-weight: 800;
+  font-size: 2.25em;
+  margin-top: 0;
+  margin-bottom: 0.8888889em;
+  line-height: 1.1111111;
+}
+
+.prose :where(h2):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-headings);
+  font-weight: 700;
+  font-size: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  line-height: 1.3333333;
+}
+
+.prose :where(h3):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-headings);
+  font-weight: 600;
+  font-size: 1.25em;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  line-height: 1.6;
+}
+
+.prose :where(h4):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-headings);
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.5;
+}
+
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-links);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.prose :where(strong):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-bold);
+  font-weight: 600;
+}
+
+.prose :where(ul):not(:where([class~="not-prose"] *)) {
+  list-style-type: disc;
+  padding-left: 1.625em;
+}
+
+.prose :where(ol):not(:where([class~="not-prose"] *)) {
+  list-style-type: decimal;
+  padding-left: 1.625em;
+}
+
+.prose :where(li):not(:where([class~="not-prose"] *)) {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--tw-prose-quotes);
+  border-left-width: 0.25rem;
+  border-left-color: var(--tw-prose-quote-borders);
+  quotes: "\\201C""\\201D""\\2018""\\2019";
+  margin-top: 1.6em;
+  margin-bottom: 1.6em;
+  padding-left: 1em;
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-code);
+  font-weight: 600;
+  font-size: 0.875em;
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)):not(:where(pre *))::before {
+  content: "\`";
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)):not(:where(pre *))::after {
+  content: "\`";
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  color: var(--tw-prose-pre-code);
+  background-color: var(--tw-prose-pre-bg);
+  overflow-x: auto;
+  font-weight: 400;
+  font-size: 0.875em;
+  line-height: 1.7142857;
+  margin-top: 1.7142857em;
+  margin-bottom: 1.7142857em;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+}
+
+.prose pre {
+  background-color: var(--tw-prose-pre-bg);
+  border: 1px solid var(--tw-prose-quote-borders);
+  position: relative;
+}
+
+.prose pre code {
+  display: block;
+  padding-right: 1rem;
+}
+
+.prose pre .copy-button {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 2.5rem;
+  height: 1.5rem;
+  padding: 0;
+  font-size: 0.7rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tw-prose-pre-code);
+  background-color: var(--tw-prose-pre-bg);
+  border: 1px solid var(--tw-prose-quote-borders);
+  border-radius: 0.2rem;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.prose pre .copy-button:hover {
+  opacity: 1;
+}
+
+.prose pre .copy-button.copied {
+  color: #059669;
+  opacity: 1;
+  background-color: #ecfdf5;
+}
+
+.dark .prose pre .copy-button.copied {
+  color: #34d399;
+  background-color: #064e3b;
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875em;
+}
+
+/* Syntax highlighting overrides for light mode */
+:root .hljs {
+  color: #1a1a1a;
+  background: transparent;
+}
+
+:root .hljs-keyword,
+:root .hljs-selector-tag,
+:root .hljs-title,
+:root .hljs-section {
+  color: #0550ae;
+}
+
+:root .hljs-string,
+:root .hljs-attr {
+  color: #0a3069;
+}
+
+:root .hljs-number,
+:root .hljs-literal {
+  color: #0550ae;
+}
+
+:root .hljs-property {
+  color: #953800;
+}
+
+:root .hljs-comment {
+  color: #6e7781;
+}
+
+:root .hljs-doctag,
+:root .hljs-meta {
+  color: #116329;
+}
+
+/* Dark mode syntax highlighting */
+.dark .hljs {
+  color: #e5e7eb;
+  background: transparent;
+}
+
+.dark .hljs-keyword,
+.dark .hljs-selector-tag,
+.dark .hljs-title,
+.dark .hljs-section {
+  color: #93c5fd;
+}
+
+.dark .hljs-string,
+.dark .hljs-attr {
+  color: #7dd3fc;
+}
+
+.dark .hljs-number,
+.dark .hljs-literal {
+  color: #c4b5fd;
+}
+
+.dark .hljs-property {
+  color: #fca5a5;
+}
+
+.dark .hljs-comment {
+  color: #9ca3af;
+}
+
+.dark .hljs-doctag,
+.dark .hljs-meta {
+  color: #6ee7b7;
+}
+
+/* Copy button styles */
+.dark .prose pre .copy-button {
+  color: #e5e7eb;
+  background-color: #1e293b;
+  border-color: #4b5563;
+}
+
+.dark .prose pre .copy-button:hover {
+  background-color: #374151;
+}
+
+.dark .prose pre .copy-button.copied {
+  color: #34d399;
+} 

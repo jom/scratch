@@ -1,0 +1,102 @@
+{
+  "name": "scratch",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A modern Markdown editor with live preview and smart features",
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && vite build -c vite.preload.config.ts && vite build -c vite.main.config.ts && cp -r node_modules/electron-squirrel-startup .vite/",
+    "preview": "vite preview",
+    "start": "electron-forge start",
+    "package": "DEBUG=electron-forge:* electron-forge package --verbose",
+    "make": "electron-forge make"
+  },
+  "dependencies": {
+    "@monaco-editor/loader": "^1.4.0",
+    "@monaco-editor/react": "^4.6.0",
+    "highlight.js": "^11.9.0",
+    "marked": "^11.1.1",
+    "object-assign": "^4.1.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "react-lifecycles-compat": "^3.0.4",
+    "react-split-pane": "^0.1.92",
+    "react-style-proptype": "^3.2.2",
+    "scheduler": "^0.23.0",
+    "split.js": "^1.6.5",
+    "state-local": "^1.0.7"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-vite": "^7.2.0",
+    "@types/electron": "^1.6.10",
+    "@types/electron-squirrel-startup": "^1.0.0",
+    "@types/marked": "^5.0.2",
+    "@types/node": "^20.11.0",
+    "@types/prop-types": "^15.7.11",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/react-split-pane": "^0.1.67",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.17",
+    "electron": "^28.1.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11"
+  },
+  "main": ".vite/main.js",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "Scratch",
+        "executableName": "Scratch",
+        "appBundleId": "im.jom.scratch",
+        "appCategoryType": "public.app-category.productivity",
+        "asar": true
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        }
+      ],
+      "plugins": [
+        {
+          "name": "@electron-forge/plugin-vite",
+          "config": {
+            "build": [
+              {
+                "entry": "src/main.ts",
+                "config": "vite.main.config.ts"
+              },
+              {
+                "entry": "src/preload.ts",
+                "config": "vite.preload.config.ts"
+              }
+            ],
+            "renderer": [
+              {
+                "name": "main_window",
+                "config": "vite.config.ts",
+                "preload": {
+                  "entry": "src/preload.ts",
+                  "config": "vite.preload.config.ts"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
