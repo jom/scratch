@@ -1,4 +1,6 @@
-# Modern Markdown Editor
+# Simple Markdown Editor
+
+I wrote this app purely using Cursor IDE. I wanted to see how well it could handle a full app from scratch with just natural language prompts.
 
 A modern, feature-rich Markdown editor built with Electron, React, and TypeScript. Features live preview, smart code paste detection, and theme support.
 
@@ -53,8 +55,8 @@ pnpm run package
 - `⌘S` - Save file
 - `⌘⇧P` - Toggle preview
 - `⌘,` - Open settings
-- `⌘V` - Smart paste (with code detection)
-- `⌘⇧V` - Plain paste
+- `⌘⇧V` - Smart paste (with code detection)
+- `⌘V` - Plain paste
 
 ## Development
 
